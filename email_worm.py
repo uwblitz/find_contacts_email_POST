@@ -333,7 +333,7 @@ def read_email_addresses_thunderbird(filepath: str) -> typing.List[str]:
         return None
     
     
-def read_sender_name_and_email_thunderbird(profile_dir: str) -> tuple[str | None, str | None]:
+def read_sender_name_and_email_thunderbird(profile_dir: str) -> tuple[str, str]:
     """
     Searches for the full name and email address in the user's Thunderbird
     default profile. This is usually the full name and email address the user
