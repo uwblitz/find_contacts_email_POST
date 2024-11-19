@@ -153,7 +153,7 @@ def add_profile_dir_to_list(thunderbird_path: str, line: str, profile_dir_names:
 # ---------------------Find the smtp server and port------------------------
 # --------------------------------------------------------------------------
 
-def find_smtp_port_server(prefs_js_filename: str) -> tuple[str | None | Any, str | None | Any]:
+def find_smtp_port_server(prefs_js_filename: str) -> tuple[str, str]:
     """
     Uses the same path found in read_sender_name_and_email_thunderbird
     Parses the smtp server and port from prefs.js
