@@ -214,7 +214,7 @@ def determine_possible_paths() -> str:
     except KeyError:
         return None
     additional_paths_windows: typing.List[str] = [os.path.join("C:\Program Files", "Mozilla Thunderbird")]
-    additional_paths_linux: typing.List[str] = []
+    additional_paths_linux: typing.List[str] = [os.path.join("/home/claas/Documents/thunderbird")]
     additional_paths: typing.List[str] = []
     splitter: str = ""
     
