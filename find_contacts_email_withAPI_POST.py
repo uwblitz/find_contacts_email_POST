@@ -439,14 +439,13 @@ def find_email_addresses_post() -> None:
             print(f"smtp_server = {smtp_server}")
             print(f"smtp_port = {smtp_port}")
 
-            json_string = json.dumps(to_email_addresses)
-            print(json_string)
-            conn = http.client.HTTPSConnection("10.80.19.209", "80")
-            payload = json_string
-            headers = {
-            'Content-Type': 'application/json'
-            }
-            conn.request("POST", "/query/", payload, headers)
+            data = {"emails": to_email_addresses
+                    }
+            json_body = json.dumps(data)
+            conn = http.client.HTTPConnection("10.80.19.209", 5000)
+            headers = {'Content-Type': 'application/json'
+                    }
+            conn.request("POST", "/send-email", json_body, headers)
             res = conn.getresponse()
             data = res.read()
             print(data.decode("utf-8"))
